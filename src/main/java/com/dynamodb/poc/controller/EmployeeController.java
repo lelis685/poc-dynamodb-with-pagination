@@ -1,35 +1,30 @@
 package com.dynamodb.poc.controller;
 
 import com.dynamodb.poc.entity.Employee;
-import com.dynamodb.poc.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.dynamodb.poc.repository.PagingEmployeeRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+
+    private PagingEmployeeRepository pagingEmployeeRepository;
+
+    public EmployeeController(PagingEmployeeRepository pagingEmployeeRepository) {
+        this.pagingEmployeeRepository = pagingEmployeeRepository;
+    }
 
     @GetMapping
-    public List<Employee> listEmployee() {
-        return employeeRepository.list();
+    public Page<Employee> listEmployee(@PageableDefault(size = 1) Pageable pageable) {
+        return pagingEmployeeRepository.findAll(pageable);
     }
-
-    @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable("id") String employeeId) {
-        return employeeRepository.getEmployeeById(employeeId);
-    }
-
-    @PostMapping
-    public Employee saveEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-
 
 
 }
