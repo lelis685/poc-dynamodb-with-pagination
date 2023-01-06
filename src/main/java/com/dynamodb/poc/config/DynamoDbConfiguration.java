@@ -17,9 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableDynamoDBRepositories(basePackageClasses = PagingEmployeeRepository.class)
 public class DynamoDbConfiguration {
 
-    @Autowired
-    private DynamodbProperties dynamodbProperties;
-
     @Bean
     public DynamoDBMapperConfig  dynamoDBMapperConfig() {
         return DynamoDBMapperConfig.DEFAULT;
@@ -31,16 +28,15 @@ public class DynamoDbConfiguration {
                 .standard()
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
-                                String.format("dynamodb.%s.amazonaws.com",
-                                        dynamodbProperties.getRegion()),
-                                dynamodbProperties.getRegion()
+                                "http://localhost:8000",
+                                "us-east-1"
                         )
                 )
                 .withCredentials(
                         new AWSStaticCredentialsProvider(
                                 new BasicAWSCredentials(
-                                        dynamodbProperties.getAccessKey(),
-                                        dynamodbProperties.getSecretKey()
+                                        "fakeMyKeyId",
+                                        "fakeSecretAccessKey"
                                 )
                         )
                 )
