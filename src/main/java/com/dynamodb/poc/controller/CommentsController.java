@@ -5,6 +5,7 @@ import com.dynamodb.poc.entity.SupportMessage;
 import com.dynamodb.poc.repository.CommentsRepository;
 import com.dynamodb.poc.repository.SuportMessageRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/comments")
 public class CommentsController {
