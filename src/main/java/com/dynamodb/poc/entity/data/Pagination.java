@@ -8,5 +8,6 @@ import lombok.Data;
 public class Pagination {
 
     private String next;
+
     private int pageSize;
 }

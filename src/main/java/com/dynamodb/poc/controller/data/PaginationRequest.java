@@ -6,5 +6,5 @@ import lombok.Data;
 public class PaginationRequest {
 
     private String next;
-    private int pageSize = 1;
+    private int pageSize = 2;
 }

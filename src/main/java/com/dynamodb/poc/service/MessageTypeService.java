@@ -37,7 +37,7 @@ public class MessageTypeService {
 
         if (lastEvaluatedKeyValues == null) {
             return PageableResultSet.<List<MessageType>>builder()
-                    .pagination(Pagination.builder().build())
+                    .pagination(Pagination.builder().pageSize(pagination.getPageSize()).build())
                     .data(messagesResultPage.getResults())
                     .build();
         }
