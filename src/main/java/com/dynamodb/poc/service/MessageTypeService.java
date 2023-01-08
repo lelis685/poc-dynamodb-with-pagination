@@ -10,7 +10,9 @@ import com.dynamodb.poc.repository.MessageTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -23,24 +25,19 @@ public class MessageTypeService {
     public PageableResultSet<List<MessageType>> getMessagesWithMinUrgencyByDepartment(String department,
                                                                                       PaginationRequest pagination) {
 
-        QueryResultPage<MessageType> messagesResultPage =
+        var messagesResultPage =
                 messageTypeRepository.getMessagesWithMinUrgencyByDepartment(department, pagination);
 
-        return buildResults(messagesResultPage, pagination);
+        return messagesResultPage.getLastEvaluatedKey() == null ?
+                buildEmptyResults(pagination) :
+                buildResults(messagesResultPage, pagination);
     }
 
 
     private PageableResultSet<List<MessageType>> buildResults(QueryResultPage<MessageType> messagesResultPage,
                                                               PaginationRequest pagination) {
 
-        Map<String, AttributeValue> lastEvaluatedKeyValues  = messagesResultPage.getLastEvaluatedKey();
-
-        if (lastEvaluatedKeyValues == null) {
-            return PageableResultSet.<List<MessageType>>builder()
-                    .pagination(Pagination.builder().pageSize(pagination.getPageSize()).build())
-                    .data(messagesResultPage.getResults())
-                    .build();
-        }
+        Map<String, AttributeValue> lastEvaluatedKeyValues = messagesResultPage.getLastEvaluatedKey();
 
         List<String> lastEvaluatedKey = lastEvaluatedKeyValues.values()
                 .stream()
@@ -57,6 +54,13 @@ public class MessageTypeService {
         return PageableResultSet.<List<MessageType>>builder()
                 .pagination(page)
                 .data(messagesResultPage.getResults())
+                .build();
+    }
+
+    private PageableResultSet<List<MessageType>> buildEmptyResults(PaginationRequest pagination) {
+        return PageableResultSet.<List<MessageType>>builder()
+                .pagination(Pagination.builder().pageSize(pagination.getPageSize()).build())
+                .data(Collections.<MessageType>emptyList())
                 .build();
     }
 
