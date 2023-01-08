@@ -37,14 +37,7 @@ public class MessageTypeService {
     private PageableResultSet<List<MessageType>> buildResults(QueryResultPage<MessageType> messagesResultPage,
                                                               PaginationRequest pagination) {
 
-        Map<String, AttributeValue> lastEvaluatedKeyValues = messagesResultPage.getLastEvaluatedKey();
-
-        List<String> lastEvaluatedKey = lastEvaluatedKeyValues.values()
-                .stream()
-                .map(AttributeValue::getS)
-                .collect(Collectors.toList());
-        Collections.reverse(lastEvaluatedKey);
-        String next = String.join("*", lastEvaluatedKey);
+        String next = buildLastEvaluatedKey(messagesResultPage);
 
         Pagination page = Pagination.builder()
                 .next(next)
@@ -55,6 +48,20 @@ public class MessageTypeService {
                 .pagination(page)
                 .data(messagesResultPage.getResults())
                 .build();
+    }
+
+    private static String buildLastEvaluatedKey(QueryResultPage<MessageType> messagesResultPage) {
+        Map<String, AttributeValue> lastEvaluatedKeyValues = messagesResultPage.getLastEvaluatedKey();
+
+        List<String> lastEvaluatedKey = lastEvaluatedKeyValues.values()
+                .stream()
+                .map(AttributeValue::getS)
+                .collect(Collectors.toList());
+        Collections.reverse(lastEvaluatedKey);
+
+        String next = String.join("*", lastEvaluatedKey);
+
+        return next;
     }
 
     private PageableResultSet<List<MessageType>> buildEmptyResults(PaginationRequest pagination) {
