@@ -50,7 +50,7 @@ public class MessageTypeService {
                 .build();
     }
 
-    private static String buildLastEvaluatedKey(QueryResultPage<MessageType> messagesResultPage) {
+    private String buildLastEvaluatedKey(QueryResultPage<MessageType> messagesResultPage) {
         Map<String, AttributeValue> lastEvaluatedKeyValues = messagesResultPage.getLastEvaluatedKey();
 
         List<String> lastEvaluatedKey = lastEvaluatedKeyValues.values()

@@ -7,14 +7,11 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.dynamodb.poc.controller.data.PaginationRequest;
-import com.dynamodb.poc.entity.Comment;
 import com.dynamodb.poc.entity.MessageType;
-import com.dynamodb.poc.entity.SupportMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor

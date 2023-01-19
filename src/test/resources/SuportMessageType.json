@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "department": {
+              "type": "string"
+            },
+            "urgencyType": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "department",
+            "urgencyType",
+            "message"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "department": {
+              "type": "string"
+            },
+            "urgencyType": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "department",
+            "urgencyType",
+            "message"
+          ]
+        }
+      ]
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string"
+        },
+        "pageSize": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "next",
+        "pageSize"
+      ]
+    }
+  },
+  "required": [
+    "data",
+    "pagination"
+  ]
+}
